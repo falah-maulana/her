@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Surprise Buat Wika! 🎉</title>
+    
+    <!-- Import Font yang Lucu & Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- Import Library Confetti (Buat efek jedar-jeder) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: #fff0f3;
+            color: #333;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container Umum */
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SCREEN 1: INTRO --- */
+        #screen-intro {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+        
+        .envelope-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- SCREEN 2: CONGRATS (Jedar-Jeder) --- */
+        #screen-congrats h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff4d6d;
+            font-size: 38px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #fff;
+        }
+
+        #screen-congrats p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* --- SCREEN 3: SERTIFIKAT --- */
+        .certificate-container {
+            background-color: #fff;
+            border: 8px solid #ffb3c1;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            position: relative;
+            overflow: hidden;
+            width: 95%;
+            max-width: 400px;
+        }
+
+        /* Hiasan background sertifikat */
+        .certificate-container::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 2px dashed #ff8fa3;
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .cert-header {
+            font-family: 'Pacifico', cursive;
+            color: #ff4d6d;
+            font-size: 28px;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .cert-subheader {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .cert-body {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .cert-name {
+            font-size: 26px;
+            font-weight: 900;
+            color: #ff2a50;
+            margin: 15px 0;
+            text-decoration: underline;
+            text-decoration-color: #ffb3c1;
+            text-underline-offset: 5px;
+        }
+
+        .cert-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+
+        .signature-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .signature {
+            font-family: 'Pacifico', cursive;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: -5px;
+        }
+
+        .signature-line {
+            width: 120px;
+            height: 2px;
+            background-color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .signature-title {
+            font-size: 12px;
+            color: #888;
+            font-weight: bold;
+        }
+
+        .stamp {
+            width: 70px;
+            height: 70px;
+            background-color: #ff4d6d;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            transform: rotate(-15deg);
+            border: 3px dashed white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Tombol-tombol */
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+            transition: transform 0.2s, background 0.2s;
+            font-family: 'Nunito', sans-serif;
+            margin-top: 20px;
+            z-index: 10;
+        }
+
+        .btn:hover, .btn:active {
+            transform: scale(1.05);
+            background-color: #ff2a50;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: Muka Depan Pas Scan QR -->
+    <div id="screen-intro" class="screen active">
+        <div class="envelope-icon">💌</div>
+        <h1 style="color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); margin-bottom: 10px;">Ada pesan spesial...</h1>
+        <p style="color: white; margin-bottom: 30px;">Khusus buat cewek paling hebat sedunia yang baru aja ACC Sidang!</p>
+        <button class="btn" style="background-color: white; color: #ff4d6d;" onclick="showCongrats()">Buka Pesannya 💖</button>
+    </div>
+
+    <!-- SCREEN 2: Kejutan Jedar-Jeder Confetti -->
+    <div id="screen-congrats" class="screen">
+        <h1>Happy Graduation!<br>🎓 Wika Sayang 🎓</h1>
+        <p>
+            <b>ALHAMDULILLAH ACC SIDANG!!! 🎉</b><br><br>
+            Akhirnya nangis-nangisnya, begadangnya, overthinking-nya, dan drama coret-coretan dosen pembimbing semuanya terbayar lunas hari ini!<br><br>
+            Aku bangga banget banget banget sama kamu. Kamu hebat udah bertahan sejauh ini sayang. Peluk jauuuhhh! 🫂❤️
+        </p>
+        <button class="btn" onclick="showCertificate()">Klaim Hadiah Spesial 🎁</button>
+    </div>
+
+    <!-- SCREEN 3: Sertifikat Kelulusan Jalur Ayang -->
+    <div id="screen-certificate" class="screen">
+        <div class="certificate-container">
+            <h2 class="cert-header">Sertifikat</h2>
+            <div class="cert-subheader">Kelulusan Jalur Ayang</div>
+            
+            <div class="cert-body">
+                Diberikan dengan penuh rasa cinta dan kebanggaan yang luar biasa kepada:
+                
+                <div class="cert-name">Wika Tri Lestari,  S.M</div>
+                <!-- ^^^ GANTI GELARNYA DI SINI YA BANG! ^^^ -->
+
+                Atas keberhasilannya mengalahkan rasa malas, menaklukkan revisian dosen pembimbing yang tiada akhir, dan mengalahkan drama skripsi yang bikin nangis malam-malam.
+            </div>
+
+            <div class="cert-footer">
+                <div class="stamp">
+                    100%<br>LULUS<br>SAH!
+                </div>
+                <div class="signature-block">
+                    <!-- ^^^ GANTI NAMA/PANGGILAN ABANG DI SINI ^^^ -->
+                    <div class="signature">Mas ehemmm</div> 
+                    <div class="signature-line"></div>
+                    <div class="signature-title">Partner</div>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 14px; color: #666;">
+            <i>*Screenshot sertifikat ini dan tukarkan dengan pelukan + jalan-jalan + makan enak! 🛵💨</i>
+        </p>
+    </div>
+
+    <script>
+        // Fungsi buat mindahin layar
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Fungsi pas buka pesan (layar jedar-jeder)
+        function showCongrats() {
+            switchScreen('screen-congrats');
+            fireConfetti();
+        }
+
+        // Fungsi pas klaim sertifikat
+        function showCertificate() {
+            switchScreen('screen-certificate');
+            // Tembak confetti kecil pas sertifikat kebuka
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffb3c1', '#ffffff']
+            });
+        }
+
+        // Fungsi ledakan Confetti (Jedar-jeder super meriah)
+        function fireConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Tembak dari kiri dan kanan
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
