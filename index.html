@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Surprise Buat Wika! 🎉</title>
+    <title>Ada Sesuatu Buat Pacarku! 🎉</title>
     
     <!-- Import Font yang Lucu & Aesthetic -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
@@ -83,6 +83,29 @@
             color: #555;
             margin-bottom: 30px;
             line-height: 1.6;
+        }
+
+        /* --- FOTO WIKA --- */
+        .photo-container {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+            overflow: hidden;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* --- SCREEN 3: SERTIFIKAT --- */
@@ -218,19 +241,32 @@
 </head>
 <body>
 
+    <!-- AUDIO BACKGROUND -->
+    <audio id="bg-music" loop>
+        <!-- Ganti src dengan nama file lagu abang (misal: lagu.mp3) -->
+        <source src="Terima Kasih Sudah Bertahan.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- SCREEN 1: Muka Depan Pas Scan QR -->
     <div id="screen-intro" class="screen active">
         <div class="envelope-icon">💌</div>
         <h1 style="color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); margin-bottom: 10px;">Ada pesan spesial...</h1>
-        <p style="color: white; margin-bottom: 30px;">Khusus buat cewek paling hebat sedunia yang baru aja ACC Sidang!</p>
-        <button class="btn" style="background-color: white; color: #ff4d6d;" onclick="showCongrats()">Buka Pesannya 💖</button>
+        <p style="color: white; margin-bottom: 30px;">Khusus buat cewek paling hebat sedunia yang baru aja sidang skripsi!</p>
+        <button class="btn" style="background-color: white; color: #ff4d6d;" onclick="showCongrats()">Buka Pesannya Sayang 💖</button>
     </div>
 
     <!-- SCREEN 2: Kejutan Jedar-Jeder Confetti -->
     <div id="screen-congrats" class="screen">
+        
+        <!-- FOTO WIKA DI SINI -->
+        <div class="photo-container">
+            <!-- GANTI src INI DENGAN NAMA FILE FOTO WIKA (misal: foto-wika.jpg) -->
+            <img src="sidang.jpeg" alt="Wika Cantik">
+        </div>
+
         <h1>Happy Graduation!<br>🎓 Wika Sayang 🎓</h1>
         <p>
-            <b>ALHAMDULILLAH ACC SIDANG!!! 🎉</b><br><br>
+            <b>ALHAMDULILLAH SUDAH SIDANG!!! 🎉</b><br><br>
             Akhirnya nangis-nangisnya, begadangnya, overthinking-nya, dan drama coret-coretan dosen pembimbing semuanya terbayar lunas hari ini!<br><br>
             Aku bangga banget banget banget sama kamu. Kamu hebat udah bertahan sejauh ini sayang. Peluk jauuuhhh! 🫂❤️
         </p>
@@ -246,7 +282,7 @@
             <div class="cert-body">
                 Diberikan dengan penuh rasa cinta dan kebanggaan yang luar biasa kepada:
                 
-                <div class="cert-name">Wika Tri Lestari,  S.M</div>
+                <div class="cert-name">Wika Tri Lestari, S.M</div>
                 <!-- ^^^ GANTI GELARNYA DI SINI YA BANG! ^^^ -->
 
                 Atas keberhasilannya mengalahkan rasa malas, menaklukkan revisian dosen pembimbing yang tiada akhir, dan mengalahkan drama skripsi yang bikin nangis malam-malam.
@@ -258,15 +294,15 @@
                 </div>
                 <div class="signature-block">
                     <!-- ^^^ GANTI NAMA/PANGGILAN ABANG DI SINI ^^^ -->
-                    <div class="signature">Mas ehemmm</div> 
+                    <div class="signature">bubub</div> 
                     <div class="signature-line"></div>
-                    <div class="signature-title">Partner</div>
+                    <div class="signature-title">Your Partner</div>
                 </div>
             </div>
         </div>
 
         <p style="margin-top: 20px; font-size: 14px; color: #666;">
-            <i>*Screenshot sertifikat ini dan tukarkan dengan pelukan + jalan-jalan + makan enak! 🛵💨</i>
+            <i>*Screenshot sertifikat ini dan tukarkan dengan pelukan + jalan-jalan + makan enak ntar klo udah ga LDR! 🛵💨</i>
         </p>
     </div>
 
@@ -284,6 +320,10 @@
         function showCongrats() {
             switchScreen('screen-congrats');
             fireConfetti();
+            
+            // Mainkan backsound pas tombol diklik
+            let music = document.getElementById('bg-music');
+            music.play().catch(e => console.log("Audio siap diputar"));
         }
 
         // Fungsi pas klaim sertifikat
